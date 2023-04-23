@@ -1,8 +1,16 @@
 ARG BASE=python:alpine
 FROM ${BASE}
+COPY package.json .npmrc pnpm-lock.yaml /tmp/build/
+RUN set -x \
+    && apk update \
+    && apk add nodejs npm git \
+    && npm i -g pnpm \
+    && cd /tmp/build \
+    && pnpm install --prod
 
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
+ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
 ARG QL_BRANCH=develop
 
@@ -47,7 +55,7 @@ RUN set -x \
     && rm -rf /root/.local/share/pnpm/store \
     && rm -rf /root/.cache \
     && rm -rf /root/.npm
-
+COPY --from=builder /tmp/build/node_modules/. /ql/node_modules/
 ARG SOURCE_COMMIT
 RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cd ${QL_DIR} \
@@ -58,6 +66,5 @@ RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && mkdir -p ${QL_DIR}/static \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
-
     
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]

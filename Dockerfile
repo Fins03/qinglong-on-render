@@ -5,7 +5,9 @@ RUN echo root:york618|chpasswd
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
-ARG QL_BRANCH=master
+ARG QL_BRANCH=masterARG 
+ARG QL_STATIC_BRANCH=master
+
 
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     LANG=zh_CN.UTF-8 \

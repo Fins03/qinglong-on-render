@@ -1,12 +1,11 @@
-FROM python:alpine as builder
+FROM python:alpine
 RUN set -x \
     && apk update \
     && apk add nodejs npm git \
     && npm i -g pnpm \
     && cd /tmp/build \
     && pnpm install --prod
-    COPY package.json .npmrc pnpm-lock.yaml /tmp/build/
-FROM python:alpine
+   
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
@@ -65,6 +64,6 @@ RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && mkdir -p ${QL_DIR}/static \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
-COPY --from=builder /tmp/build/node_modules/. /ql/node_modules/
+
 EXPOSE 5700    
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]

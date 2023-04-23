@@ -1,5 +1,4 @@
-ARG BASE=python:alpine
-FROM ${BASE}
+FROM python3.9.16-alpine
 
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"

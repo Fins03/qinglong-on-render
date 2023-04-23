@@ -14,6 +14,8 @@ ENV PNPM_HOME=/root/.local/share/pnpm \
     QL_DIR=/ql \
     QL_BRANCH=${QL_BRANCH}
 
+WORKDIR ${QL_DIR}
+
 RUN set -x \
     && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
     && apk update -f \
@@ -57,8 +59,5 @@ RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
 
-COPY --from=builder /tmp/build/node_modules/. /ql/node_modules/
-
-WORKDIR ${QL_DIR}
     
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]

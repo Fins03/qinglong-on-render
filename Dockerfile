@@ -67,4 +67,5 @@ RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
     
+    
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]

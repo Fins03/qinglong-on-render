@@ -1,8 +1,5 @@
 ARG BASE=python:alpine
 FROM ${BASE}
-FROM whyour/qinglong:latest
-RUN echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config 
-RUN echo root:york618|chpasswd
 
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
@@ -21,29 +18,7 @@ ENV PNPM_HOME=/root/.local/share/pnpm \
 
 WORKDIR ${QL_DIR}
 
-RUN set -x \
-    && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
-    && apk update -f \
-    && apk upgrade \
-    && apk --no-cache add -f bash \
-                             coreutils \
-                             moreutils \
-                             git \
-                             curl \
-                             wget \
-                             tzdata \
-                             perl \
-                             openssl \
-                             nginx \
-                             nodejs \
-                             jq \
-                             openssh \
-                             npm \
-    && rm -rf /var/cache/apk/* \
-    && apk update \
-    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && echo "Asia/Shanghai" > /etc/timezone \
-    && git config --global user.email "qinglong@@users.noreply.github.com" \
+RUN git config --global user.email "qinglong@@users.noreply.github.com" \
     && git config --global user.name "qinglong" \
     && git config --global http.postBuffer 524288000 \
     && git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
@@ -61,5 +36,4 @@ RUN set -x \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
     
-EXPOSE 5700
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]

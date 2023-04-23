@@ -1,4 +1,4 @@
-FROM python3.9.16-alpine
+FROM python:alpine
 
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"

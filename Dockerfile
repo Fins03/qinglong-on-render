@@ -18,10 +18,7 @@ ENV PNPM_HOME=/root/.local/share/pnpm \
 
 WORKDIR ${QL_DIR}
 
-RUN git config --global user.email "qinglong@@users.noreply.github.com" \
-    && git config --global user.name "qinglong" \
-    && git config --global http.postBuffer 524288000 \
-    && git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
+RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cd ${QL_DIR} \
     && cp -f .env.example .env \
     && chmod 777 ${QL_DIR}/shell/*.sh \

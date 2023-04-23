@@ -1,6 +1,6 @@
 ARG BASE=python:alpine
 FROM ${BASE}
-COPY package.json .npmrc pnpm-lock.yaml /tmp/build/
+
 RUN set -x \
     && apk update \
     && apk add nodejs npm git \
@@ -67,5 +67,5 @@ RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
     
-    
+COPY --from=builder /tmp/build/node_modules/. /ql/node_modules/
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]

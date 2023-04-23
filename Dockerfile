@@ -1,6 +1,5 @@
-FROM whyour/qinglong:latest
-RUN echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config 
-RUN echo root:york618|chpasswd
+ARG BASE=python:alpine
+FROM ${BASE}
 
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"

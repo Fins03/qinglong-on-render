@@ -1,4 +1,4 @@
-FROM BASE=python:alpine as builder
+FROM python:alpine as builder
 COPY package.json .npmrc pnpm-lock.yaml /tmp/build/
 RUN set -x \
     && apk update \
@@ -6,7 +6,7 @@ RUN set -x \
     && npm i -g pnpm \
     && cd /tmp/build \
     && pnpm install --prod
-FROM BASE=python:alpine
+FROM python:alpine
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git

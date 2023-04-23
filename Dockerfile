@@ -65,5 +65,6 @@ RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && mkdir -p ${QL_DIR}/static \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
+COPY --from=builder /tmp/build/node_modules/. /ql/node_modules/
 EXPOSE 5700    
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]

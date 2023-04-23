@@ -1,13 +1,5 @@
-FROM python:3.10-alpine as builder
-COPY package.json .npmrc pnpm-lock.yaml /tmp/build/
-RUN set -x \
-    && apk update \
-    && apk add nodejs npm git \
-    && npm i -g pnpm \
-    && cd /tmp/build \
-    && pnpm install --prod
-
-FROM python:3.10-alpine
+ARG BASE=python:alpine
+FROM ${BASE}
 
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"

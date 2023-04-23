@@ -17,7 +17,8 @@ ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 
 WORKDIR ${QL_DIR}
 
-RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
+RUN set -x \
+    && git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cd ${QL_DIR} \
     && cp -f .env.example .env \
     && chmod 777 ${QL_DIR}/shell/*.sh \

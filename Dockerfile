@@ -1,13 +1,14 @@
 ARG BASE=python:alpine
 FROM ${BASE}
 
-
 ARG QL_MAINTAINER="whyour"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
 ARG QL_BRANCH=master
+ARG QL_STATIC_BRANCH=master
 
-ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+ENV PNPM_HOME=/root/.local/share/pnpm \
+    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.local/share/pnpm:/root/.local/share/pnpm/global/5/node_modules:$PNPM_HOME \
     LANG=zh_CN.UTF-8 \
     SHELL=/bin/bash \
     PS1="\u@\h:\w \$ " \
@@ -26,9 +27,11 @@ RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && pnpm install --prod \
     && rm -rf /root/.pnpm-store \
     && rm -rf /root/.cache \
-    && git clone -b ${QL_BRANCH} https://github.com/${QL_MAINTAINER}/qinglong-static.git /static \
-    && cp -rf /static/* ${QL_DIR} \
+    && git clone -b ${QL_STATIC_BRANCH} https://github.com/${QL_MAINTAINER}/qinglong-static.git /static \
+    && mkdir -p ${QL_DIR}/static \
+    && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
+    
 
     
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]

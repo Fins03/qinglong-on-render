@@ -39,14 +39,13 @@ RUN set -x \
     && apk update \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
-    && npm install -g pnpm \
-    && pnpm add -g pm2 ts-node typescript tslib \
+    && npm add -g pm2 ts-node typescript tslib \
     && git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cd ${QL_DIR} \
     && cp -f .env.example .env \
     && chmod 777 ${QL_DIR}/shell/*.sh \
     && chmod 777 ${QL_DIR}/docker/*.sh \
-    && pnpm install --prod \
+    && npm install --prod \
     && rm -rf /root/.pnpm-store \
     && rm -rf /root/.local/share/pnpm/store \
     && rm -rf /root/.cache \

@@ -55,7 +55,7 @@ RUN set -x \
     && rm -rf /root/.local/share/pnpm/store \
     && rm -rf /root/.cache \
     && rm -rf /root/.npm
-COPY --from=builder /tmp/build/node_modules/. /ql/node_modules/
+
 ARG SOURCE_COMMIT
 RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cd ${QL_DIR} \

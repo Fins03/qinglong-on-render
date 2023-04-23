@@ -1,3 +1,5 @@
+ARG BASE=python:alpine
+FROM ${BASE}
 FROM whyour/qinglong:latest
 
 ARG QL_MAINTAINER="whyour"

@@ -1,5 +1,5 @@
 FROM python:alpine as builder
-RUN cp package.json .npmrc pnpm-lock.yaml /tmp/build/
+COPY package.json .npmrc pnpm-lock.yaml /tmp/build/
 RUN set -x \
     && apk update \
     && apk add nodejs npm git \
@@ -66,7 +66,7 @@ RUN git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
 
-RUN cp --from=builder /tmp/build/node_modules/. /ql/node_modules/
+COPY --from=builder /tmp/build/node_modules/. /ql/node_modules/
 
 WORKDIR ${QL_DIR}
     

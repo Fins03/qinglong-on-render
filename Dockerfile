@@ -1,4 +1,4 @@
-ARG BASE=python:alpine 
+ARG BASE=python:3.10-alpine
 FROM ${BASE}
 
 ARG QL_MAINTAINER="whyour"
@@ -43,9 +43,8 @@ RUN set -x \
     && git config --global user.name "qinglong" \
     && git config --global http.postBuffer 524288000 \
     && npm install -g pnpm \
-    && pnpm add -g pm2 \
-    && npm install -g typescript \
-    && npm install -g ts-node tslib \
+    && pnpm add -g pm2 tsx \
+    && pnpm add -g pm2 ts-node typescript tslib \
     && git clone -b ${QL_BRANCH} ${QL_URL} ${QL_DIR} \
     && cd ${QL_DIR} \
     && cp -f .env.example .env \

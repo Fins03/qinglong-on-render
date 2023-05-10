@@ -60,5 +60,9 @@ RUN set -x \
     && cp -rf /static/* ${QL_DIR}/static \
     && rm -rf /static
     
-    
+EXPOSE 5700
+
+HEALTHCHECK --interval=5s --timeout=2s --retries=20 \
+  CMD curl -sf http://127.0.0.1:5400/api/health || exit 1
+  
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]

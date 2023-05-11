@@ -1,4 +1,4 @@
-ARG BASE=python:3.10-alpine
+ARG BASE=python:alpine
 FROM ${BASE}
 
 ARG QL_MAINTAINER="whyour"
@@ -61,8 +61,5 @@ RUN set -x \
     && rm -rf /static
     
 EXPOSE 5700
-
-HEALTHCHECK --interval=5s --timeout=2s --retries=20 \
-  CMD curl -sf http://127.0.0.1:5400/api/health || exit 1
   
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]
